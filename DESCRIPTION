@@ -3,15 +3,16 @@ Version: 0.0.0.9000
 Title: What the Package Does (one line, title case)
 Description: What the package does (one paragraph).
 Authors@R: person("First", "Last", , "first.last@example.com", c("aut", "cre"))
-License: What license it uses
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-Suggests: 
+Suggests:
     testthat
-Imports: 
+Imports:
     foreach,
     doParallel,
     abind,
-    pixmap
+    pixmap,
+    futile.logger
 RoxygenNote: 6.0.1
