@@ -947,7 +947,6 @@ make_mov <- function(img_stack, filetype, mov_name, mov_folder){
   }
   
   im_num = dim(img_stack)[3]
-  library(pixmap)
   for (i in seq(im_num)){
     
     image(img_stack[, , i], zlim = c(0, 100), col = rgb.palette(512)) #, col = grey(seq(0, 1, length = 256))

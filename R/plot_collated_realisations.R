@@ -1,11 +1,12 @@
+plot <- function(plot_params_file){
+
 rm(list = ls())
-source('plot_routines.R')                                   # functions to plot collated outputs
-source('collate_routines.R')
+source('R/plot_routines.R')                                   # functions to plot collated outputs
+source('R/collate_routines.R')
 
 #---------------------
 # User parameters
 #---------------------
-plot_params_file = 'user_params/plot_params.R'
 source(plot_params_file)
 plot_params <- initialise_plot_params()
 
@@ -92,3 +93,4 @@ for (plot_ind in plot_params$plot_vec){
 # Close the pdf file for reading
 if (plot_params$write_pdf == TRUE) dev.off()
 
+}

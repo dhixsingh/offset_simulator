@@ -1,15 +1,15 @@
-#generic set of initialisation routines that are called for every simulation 
+#generic set of initialisation routines that are called for every simulation
 
-run_initialise_routines <- function(user_params_file){ 
-  library(foreach)
-  library(doParallel)
-  library(abind)
-  library(pixmap)
+run_initialise_routines <- function(user_params_file){
+  #' @import foreach
+  #' @import doParallel
+  #' @import abind
+  #' @import pixmap
   
-  source('initialise_params_defaults.R')
-  source('simulation_routines.R')                 # functions to run simulation
-  source('collate_routines.R')                                # functions to collate simulation outputs
-  source('plot_routines.R')                                   # functions to plot collated outputs
+  source('R/initialise_params_defaults.R')
+  source('R/simulation_routines.R')                 # functions to run simulation
+  source('R/collate_routines.R')                                # functions to collate simulation outputs
+  source('R/plot_routines.R')                                   # functions to plot collated outputs
   
   run_params <- initialise_run_params()
   policy_params <- initialise_policy_params() # list all program combinations to test
@@ -46,7 +46,7 @@ run_initialise_routines <- function(user_params_file){
                                                 full.names = FALSE, recursive = FALSE, ignore.case = FALSE, 
                                                 include.dirs = FALSE, no.. = FALSE)
     if ( (length(current_filenames) == 0) | (run_params$run_from_saved == FALSE) ){
-      source('simulate_ecology_routines.R')
+      source('R/simulate_ecology_routines.R')
       prepare_simulated_data(run_params)
     }
   }

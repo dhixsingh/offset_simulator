@@ -1,9 +1,17 @@
-rm(list = ls())
-source('initialise_routines.R')                              # functions to collate simulation outputs
-
-user_params_file = 'user_params/initialise_params_hunter.R'
-
-run_params <- run_initialise_routines(user_params_file)
+#' Runs the Offset Simulator
+#' @param config user configured parameters to use
+#' @import doParallel
+#' @import foreach
+#' @import futile.logger
+#' @export
+run <- function(config = 'R/initialise_params_defaults.R', loglevel = INFO){
+  
+flog.threshold(loglevel)
+flog.info('Starting Offset Simulator with config: %s', config )
+  
+source('R/initialise_routines.R')                              # functions to collate simulation outputs
+  
+run_params <- run_initialise_routines(config)
 initial_ecology <- readRDS(paste0(run_params$simulation_inputs_folder, 'parcel_ecology.rds'))
 parcels <- readRDS(paste0(run_params$simulation_inputs_folder, 'parcels.rds'))
 dev_weights <- readRDS(paste0(run_params$simulation_inputs_folder, 'dev_weights.rds'))
@@ -59,3 +67,4 @@ if (run_params$save_simulation_outputs == FALSE){
 
 cat('\nall scenarios done in', round(difftime(Sys.time(), run_params$strt), 1), units(difftime(Sys.time(), run_params$strt)))
 stopCluster(cl)
+}
