@@ -24,7 +24,7 @@ decline_rates_initial <- simulate_decline_rates(parcel_num = length(parcels$land
 
 initial_ecology <- select_feature_subset(initial_ecology, run_params$features_to_use_in_simulation)
 
-cl<-makeCluster(run_params$crs)  # allow parallel processing on n = 4 processors
+cl<-parallel::makeCluster(run_params$crs)  # allow parallel processing on n = 4 processors
 registerDoParallel(cl)
 
 for (scenario_ind in seq_along(run_params$policy_params_group)){
@@ -66,5 +66,5 @@ if (run_params$save_simulation_outputs == FALSE){
 }
 
 cat('\nall scenarios done in', round(difftime(Sys.time(), run_params$strt), 1), units(difftime(Sys.time(), run_params$strt)))
-stopCluster(cl)
+parallel::stopCluster(cl)
 }

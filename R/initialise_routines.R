@@ -99,7 +99,7 @@ check_current_param <- function(current_calc_type, valid_offset_calc_type){
 
 overwrite_current_params <- function(params_type, current_params, overwrite_params_file){
   
-    source(overwrite_params_file)
+    source(overwrite_params_file, local=TRUE)
     if (params_type == 'run'){
       cat('\n overwriting run_params defaults with', overwrite_params_file)
       updated_params <- initialise_run_params()
