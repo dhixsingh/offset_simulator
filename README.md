@@ -3,7 +3,7 @@ Offset simulator
 
 Software for simulating the impacts of biodiversity offsetting
 
- [![Travis build status](https://travis-ci.org/dhixsingh/offset_simulator.svg?branch=master)](https://travis-ci.org/dhixsingh/offset_simulator)
+ [![Travis build status](https://travis-ci.org/dhixsingh/offset_simulator.svg?branch=dev)](https://travis-ci.org/dhixsingh/offset_simulator)
 
 Instructions to run the software
 ---------------------------------
