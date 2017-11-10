@@ -522,15 +522,15 @@ initialise_index_object <- function(parcels, initial_ecology, run_params){
   index_object = list()
   index_object$banked_offset_pool = vector('list', parcels$region_num)
   index_object$offset_indexes_to_use = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology, 
-                                                             run_params$screen_offset_sites_by_size, run_params$screen_offset_site_zeros)
+                                                             run_params$screen_offset_sites_by_size, run_params$screen_offset_site_zeros, run_params)
   index_object$dev_indexes_to_use = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology, 
-                                                          run_params$screen_dev_sites_by_size, run_params$screen_dev_site_zeros)
+                                                          run_params$screen_dev_sites_by_size, run_params$screen_dev_site_zeros, run_params)
   
   return(index_object)
   
 }
 
-set_available_indexes <- function(indexes_to_use, parcels, initial_ecology, screen_sites_by_size, screen_zeros){
+set_available_indexes <- function(indexes_to_use, parcels, initial_ecology, screen_sites_by_size, screen_zeros, run_params){
   
   initial_parcel_sums = lapply(seq_along(initial_ecology), 
                                function(i) lapply(seq_along(initial_ecology[[i]]), 

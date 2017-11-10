@@ -34,7 +34,8 @@ for (scenario_ind in seq_along(run_params$policy_params_group)){
                'realisations on', run_params$crs, ' cores \n')
 
   if (run_params$realisation_num > 1){
-    foreach(realisation_ind = seq_len(run_params$realisation_num)) %dopar%{
+    foreach(realisation_ind = seq_len(run_params$realisation_num),
+            .verbose=TRUE) %dopar%{
       
       simulation_outputs <- run_offset_simulation_routines(policy_params = run_params$policy_params_group[[scenario_ind]], 
                                                            run_params,
