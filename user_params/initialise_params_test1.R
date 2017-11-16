@@ -17,7 +17,7 @@ initialise_run_params <- function(){
   run_params$dev_end = 5
 
   # Specify how many cores to run on. Default setting here it to use all available
-  run_params$crs = parallel::detectCores(all.tests = FALSE, logical = TRUE)
+  run_params$crs = 1 #parallel::detectCores(all.tests = FALSE, logical = TRUE)
 
   # How long to run the simulaton in years
   run_params$time_steps = 5
