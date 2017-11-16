@@ -4,7 +4,7 @@
 \alias{run}
 \title{Runs the Offset Simulator}
 \usage{
-run(config = NULL, loglevel = INFO)
+run(config = NULL, loglevel = WARN)
 }
 \arguments{
 \item{config}{user configured parameters to use}
