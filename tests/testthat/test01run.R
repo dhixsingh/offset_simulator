@@ -7,6 +7,9 @@ initialise_run_params <- function(){
   # Where simulation outputs will be written
   run_params$simulation_folder = paste0('../output/test01out')
 
+  # Fix the output directory (will overwrite existing files) instead of creating unique 
+  run_params$unique_simulation_folder = FALSE
+  
   # The number of realizations to run
   run_params$realisation_num = 1
 

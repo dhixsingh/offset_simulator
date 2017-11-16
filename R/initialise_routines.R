@@ -180,7 +180,7 @@ write_simulation_folders <- function(run_params, scenario_num){
   filenames = list.files(path = base_run_folder, all.files = FALSE,
                          full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
                          include.dirs = FALSE, no.. = FALSE, pattern='^[0-9]{1,45}$')
-  if (length(filenames) > 0){
+  if (run_params$unique_simulation_folder && length(filenames) > 0){
     current_run = as.numeric(filenames[length(filenames)]) + 1
   } else {
     current_run = 1
