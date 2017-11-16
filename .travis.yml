@@ -4,3 +4,8 @@ language: R
 sudo: false
 cache: packages
 warnings_are_errors: false
+
+script:
+script: 
+  - Rscript -e "library(testthat);invisible(source_dir('./',env=globalenv()));test_dir('tests');test_dir('tests',reporter='stop')"
+
