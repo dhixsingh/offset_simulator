@@ -1,2 +1,4 @@
 ^\.travis\.yml$
 ^user_params/
+^.*\.Rproj$
+^\.Rproj\.user$
