@@ -1,10 +1,5 @@
 run_offset_simulation_routines <- function(policy_params, run_params, parcels, initial_ecology, decline_rates_initial, 
                                            dev_weights, scenario_ind, realisation_ind){  
-  # run simulation with identical realisation instantiation
-  if (run_params$set_seed == TRUE){
-    set.seed(123)
-  }
-  
   current_data_dir = write_nested_folder(paste0(run_params$output_folder, 
                                                 'scenario_', formatC(scenario_ind, width = 3, format = "d", flag = "0"), 
                                                 '/realisation_', formatC(realisation_ind, width = 3, format = "d", flag = "0"), '/'))

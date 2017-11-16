@@ -13,6 +13,14 @@ run_initialise_routines <- function(user_params_file = NULL){
     policy_params <- overwrite_current_params(params_type = 'policy', policy_params, user_params_file)
   }
 
+  # run simulation with identical realisation instantiation
+  if (run_params$set_seed == TRUE){
+    seed=123
+    flog.info('fixing random number seed to %d', 123)
+    set.seed(seed)
+  }
+  
+  
   check_policy_params(policy_params)
   policy_params_group = generate_policy_params_group(policy_params, run_params)
   run_params$strt = Sys.time()
