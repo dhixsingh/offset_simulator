@@ -1,8 +1,11 @@
 initialise_run_params <- function(){
   run_params = list()
 
+  # Fix the random seed so we get deterministic results
+  run_params$set_seed = TRUE
+  
   # Where simulation outputs will be written
-  run_params$simulation_folder = paste0(path.expand('~'), '/offset_data/simulated/')
+  run_params$simulation_folder = paste0('../output/test01out')
 
   # The number of realizations to run
   run_params$realisation_num = 1
