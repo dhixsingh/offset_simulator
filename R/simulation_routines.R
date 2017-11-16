@@ -93,7 +93,8 @@ run_simulation <- function(simulation_outputs, run_params, policy_params, parcel
   
   #run through main time loop
   for (yr in seq_len(run_params$time_steps)){             
-    cat('\n t =', yr)
+    flog.info('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    flog.info('t=%d', yr)
     
     # if running multiple regions with distinct policies cycle through each region
     for (region_ind in seq_len(parcels$region_num)){
@@ -141,8 +142,8 @@ run_simulation <- function(simulation_outputs, run_params, policy_params, parcel
           if (credit_match_object$match_flag == TRUE){
             
             simulation_outputs$current_credit = credit_match_object$current_credit
-            cat('\n developed site with value', unlist(credit_match_object$development_object$parcel_vals_used), 'from credit')
-            cat('\n', unlist(credit_match_object$current_credit), 'remaining\n')
+            flog.info('developed site with value %d from credit', unlist(credit_match_object$development_object$parcel_vals_used))
+            flog.info('remaining %d', unlist(credit_match_object$current_credit))
             
             simulation_outputs <- perform_clearing_routine(simulation_outputs, 
                                                            simulation_outputs$index_object, 
@@ -178,9 +179,11 @@ run_simulation <- function(simulation_outputs, run_params, policy_params, parcel
           
           if (match_object$match_flag == TRUE){
             
-            cat('\n matched development site', unlist(match_object$development_object$parcel_indexes), 
-                'with offset sites', unlist(match_object$offset_object$parcel_indexes), '\n')
-            
+            flog.info(paste('matched development site', 
+                      unlist(match_object$development_object$parcel_indexes),
+                      'with offset sites',
+                      unlist(match_object$offset_object$parcel_indexes)))
+
             #update available credit 
             simulation_outputs$current_credit = match_object$current_credit
             
@@ -370,7 +373,7 @@ perform_illegal_clearing <- function(current_ecology, index_object, yr, region_i
   if (length(inds_to_clear) == 0){ #return null for no sites selected for illegal clearing
     return()
   } else {
-    cat('\n illegally cleared sites' , inds_to_clear)
+    flog.info('illegally cleared sites %s' , inds_to_clear)
   }
   
   parcel_num_remaining = length(c(unlist(index_object$indexes_to_use$offsets[[region_ind]]), 
@@ -893,7 +896,7 @@ match_parcel_set <- function(offset_pool_object, current_credit, dev_weights, ru
   current_match_vals_pool = dev_pool_object$parcel_vals_used
   
   if (sum(unlist(current_match_vals_pool))== 0){
-    cat('\nall projected developments are zero - blocking all developments')
+    flog.info('all projected developments are zero - blocking all developments')
     match_object = false_match()
     match_object$offset_object = list()
     match_object$current_credit = current_credit
@@ -1244,7 +1247,7 @@ select_pool_to_match <- function(features_to_use_in_offset_calc, ndims, thresh, 
     vals_to_test <- remove_index(vals_to_test, zero_inds)
     pool_num = length(vals_to_test)
     if (length(current_pool) == 0){
-      cat('\nall parcels yield zero assessment')
+      flog.info('all parcels yield zero assessment')
       pool_object$break_flag = TRUE
       return(pool_object)
     } 
@@ -1275,9 +1278,9 @@ select_pool_to_match <- function(features_to_use_in_offset_calc, ndims, thresh, 
   
   if (all(inds_to_use == FALSE)){
     if (match_type == 'development'){
-      cat('\n current credit of', unlist(current_credit), 'is insufficient to allow development with min of ', min(vals_to_test), '\n')
+      flog.info('current credit of %s is insufficient to allow development with min of %s', unlist(current_credit), min(vals_to_test))
     } else {
-      cat('\n insufficient offset gains available to allow development \n')
+      flog.info('insufficient offset gains available to allow development')
     }
     pool_object$break_flag = TRUE
     return(pool_object)
@@ -1648,7 +1651,7 @@ calc_cfacs <- function(parcel_ecologies, parcel_num_remaining, run_params, curre
   
   cfacs_object = list()
   if (length(decline_rates) != length(parcel_ecologies)){
-    cat('\ncalc cfacs length error')
+    flog.error('calc cfacs length error')
   }
   
   cfacs_object$cfacs = project_parcel(parcel_ecologies, 
@@ -1700,7 +1703,7 @@ adjust_cfacs <- function(current_cfacs, include_potential_developments,include_p
                                                      time_steps = run_params$time_steps)
   
   if (length(decline_rates) != length(current_cfacs)){
-    cat('\nlength error')
+    flog.error('length error')
   }
   
   if (include_potential_offsets == FALSE){
@@ -1833,7 +1836,7 @@ find_weighted_counters <- function(current_cfacs, include_illegal_clearing, incl
 calc_offset_projections <- function(current_cfacs, offset_probs, restoration_rate_params, action_type, decline_rates, time_horizons, feature_num, min_eco_val, max_eco_val){
   
   if (length(decline_rates) != length(current_cfacs)){
-    cat('\nlength error')
+    flog.error('length error')
   }
   parcel_num = length(current_cfacs)
   offset_projections = vector('list', parcel_num)

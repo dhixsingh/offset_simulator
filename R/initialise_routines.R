@@ -95,10 +95,10 @@ overwrite_current_params <- function(params_type, current_params, overwrite_para
 
     source(overwrite_params_file, local=TRUE)
     if (params_type == 'run'){
-      cat('\n overwriting run_params defaults with', overwrite_params_file)
+      flog.info('overwriting run_params defaults with %s', overwrite_params_file)
       updated_params <- initialise_run_params()
     } else {
-      cat('\n overwriting policy_params defaults with', overwrite_params_file)
+      flog.info('overwriting policy_params defaults with %s', overwrite_params_file)
       updated_params <- initialise_policy_params()
     }
 
@@ -180,7 +180,7 @@ write_simulation_folders <- function(run_params, scenario_num){
 
   run_params$run_folder = write_nested_folder(paste0(base_run_folder, formatC(current_run, width = 5, format = "d", flag = "0"), '/'))
   run_params$output_folder = write_folder(paste0(run_params$run_folder, '/simulation_outputs/'))
-  cat('\n writing simulation outputs into', run_params$run_folder, '\n' )
+  flog.info('writing simulation outputs into %s', run_params$run_folder)
 
   for (scenario_ind in (seq(scenario_num))){
     write_folder(paste0(run_params$output_folder, '/scenario_', formatC(scenario_ind, width = 3, format = "d", flag = "0"), '/'))
@@ -271,7 +271,7 @@ collate_current_policy <- function(current_policy_params, run_params){
     current_policy_params$include_potential_offsets_in_dev_calc = current_policy_params$include_potential_offsets_in_offset_calc
     current_policy_params$include_illegal_clearing_in_dev_calc = current_policy_params$include_illegal_clearing_in_offset_calc
   } else {
-    cat('\nusing independent adjustment of cfacs in development impact calculation')
+    flog.info('using independent adjustment of cfacs in development impact calculation')
   }
   current_policy_params$adjust_offset_cfacs_flag = any(current_policy_params$include_potential_developments_in_offset_calc,
                                                        current_policy_params$include_potential_offsets_in_offset_calc,
@@ -304,7 +304,7 @@ generate_policy_params_group <- function(policy_params, run_params){
     current_policy <- generate_current_policy(policy_params, current_policy_param_inds) #write current policy as a list
 
     if ((policy_ind == 1) & (current_policy$dev_counterfactual_adjustment == 'as_offset')){
-      cat('\nusing same adjustment of cfacs in development impact calculation as in offset calculation')
+      flog.info('using same adjustment of cfacs in development impact calculation as in offset calculation')
     }
 
     policy_params_group[[policy_ind]] <- collate_current_policy(current_policy, run_params)  #setup flags for cfacs, cfac adjustment etc.

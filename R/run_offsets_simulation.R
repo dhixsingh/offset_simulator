@@ -5,7 +5,7 @@
 #' @import foreach
 #' @import futile.logger
 #' @export
-run <- function(config = NULL, loglevel = INFO){
+run <- function(config = NULL, loglevel = WARN){
 
 flog.threshold(loglevel)
 flog.info('Starting Offset Simulator with config: %s', config )
@@ -29,8 +29,11 @@ registerDoParallel(cl)
 for (scenario_ind in seq_along(run_params$policy_params_group)){
 
   loop_strt <- Sys.time()
-  cat('\nrunning scenario', scenario_ind, 'of', length(run_params$policy_params_group), 'with', run_params$realisation_num,
-               'realisations on', run_params$crs, ' cores \n')
+  flog.info('running scenario %d of %d with %d realisations on %d cores', 
+            scenario_ind, 
+            length(run_params$policy_params_group),  
+            run_params$realisation_num,
+            run_params$crs)
 
   if (run_params$realisation_num > 1){
     foreach(realisation_ind = seq_len(run_params$realisation_num),
@@ -56,8 +59,10 @@ for (scenario_ind in seq_along(run_params$policy_params_group)){
                                                          realisation_ind = 1)
   }
 
-  cat('\n   scenario', scenario_ind, 'done in',
-              round(difftime(Sys.time(), loop_strt), 1), units(difftime(Sys.time(), loop_strt)))
+  flog.info('scenario %d done in %s %s', 
+            scenario_ind,
+            round(difftime(Sys.time(), loop_strt), 1), 
+            units(difftime(Sys.time(), loop_strt)))
 
 }
 
@@ -65,6 +70,9 @@ if (run_params$save_simulation_outputs == FALSE){
   unlink(run_params$output_folder, recursive = TRUE)
 }
 
-cat('\nall scenarios done in', round(difftime(Sys.time(), run_params$strt), 1), units(difftime(Sys.time(), run_params$strt)))
+flog.info('all scenarios done in %s %s', 
+          round(difftime(Sys.time(), run_params$strt), 1), 
+          units(difftime(Sys.time(), run_params$strt)))
+
 parallel::stopCluster(cl)
 }
