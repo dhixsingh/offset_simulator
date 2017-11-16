@@ -10,16 +10,26 @@ Instructions to run the software
 
 Download and install the latest version of R. If you are running from a linux-type system this can be done using:
 
-`sudo apt-get update`
+```
+sudo apt-get update
+sudo apt-get install r-base
+sudo apt-get install git
+```
 
-`sudo apt-get install r-base`
+To install the `offsetsim` package, from inside R do:
 
-`sudo apt-get install git`
+```
+> library(devtools)
+> install_github("dhixsingh/offset_simulator", ref="dev")
+> library(offsetsim)
+```
 
+Then to run the simulator and plot the results, from inside R do:
 
-Install the R packages foreach, doParallel, abind and pixmap. To do this from within R you can run:
-
-`install.packages(c("foreach", "doParallel", "abind", "pixmap"))`
+```
+> offsetsim::run('/path/to/your/init-params.R')
+> offsetsim::plot('/path/to/your/plot-params.R')
+```
 
 
 Description on the files
