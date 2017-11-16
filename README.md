@@ -21,12 +21,12 @@ To install the `offsetsim` package, from inside R do:
 ```
 > library(devtools)
 > install_github("dhixsingh/offset_simulator", ref="dev")
-> library(offsetsim)
 ```
 
 Then to run the simulator and plot the results, from inside R do:
 
 ```
+> library(offsetsim)
 > offsetsim::run('/path/to/your/init-params.R')
 > offsetsim::plot('/path/to/your/plot-params.R')
 ```
