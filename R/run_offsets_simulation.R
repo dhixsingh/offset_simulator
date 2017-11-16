@@ -1,6 +1,6 @@
 #' Runs the Offset Simulator
 #' @param config user configured parameters to use
-#' @param loglevel loggin level to use, for instance futile.logger::INFO
+#' @param loglevel logging level to use, for instance futile.logger::INFO
 #' @import doParallel
 #' @import foreach
 #' @import futile.logger

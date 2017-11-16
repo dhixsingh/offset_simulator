@@ -516,7 +516,7 @@ plot_collated_realisation_set <- function(current_collated_real, overlay_plots, 
   realisation_sum = Reduce('+', current_collated_real)
   realisation_mean = realisation_sum/realisation_num
   if (overlay_plots == FALSE){
-    plot(current_collated_real[[1]], type = 'l', ylab = '', main = plot_title, xlab = x_lab, ylim = c(mn, mx), col = back_plot_col, lwd = lwd_vec[2])
+    graphics::plot(current_collated_real[[1]], type = 'l', ylab = '', main = plot_title, xlab = x_lab, ylim = c(mn, mx), col = back_plot_col, lwd = lwd_vec[2])
   } else { lines(current_collated_real[[1]], lwd = lwd_vec[2], col = back_plot_col)
   }
   
@@ -575,7 +575,7 @@ generate_single_realisation_plots <- function(run_params, realisations, net_cfac
     x_lab = paste0('Mean System NNL = ', round(NNL_object$landscape_NNL), 'years')
   } else {x_lab = 'NNL fail'}
   
-  plot((net_cond), type = 'l', main = 'Landscape Condition Relative to cfac', xlab = x_lab, ylab = '', col = 'red', lwd = 3)
+  graphics::plot((net_cond), type = 'l', main = 'Landscape Condition Relative to cfac', xlab = x_lab, ylab = '', col = 'red', lwd = 3)
   abline(h = 0, lty = 2)
   
 }
@@ -630,7 +630,7 @@ plot_mean_gains_degs <- function(summed_realisations, policy_params, realisation
   
   for (plot_ind in 1:length(plot_list)){
     if (plot_ind == 1){
-      plot(plot_list[[plot_ind]], type = 'l', lty = lty_vec[plot_ind], lwd = 2, col = col_vec[plot_ind], ylim = c(mn, mx))
+      graphics::plot(plot_list[[plot_ind]], type = 'l', lty = lty_vec[plot_ind], lwd = 2, col = col_vec[plot_ind], ylim = c(mn, mx))
     } else {
       lines(plot_list[[plot_ind]], lty = lty_vec[plot_ind], lwd = 2, col = col_vec[plot_ind], ylim = c(mn, mx))
     }
@@ -673,7 +673,7 @@ plot_mean_gains_degs <- function(summed_realisations, policy_params, realisation
 # }
 
 null_plot <- function(){
-  plot(NULL, type= 'n', xlim = c(0, 1), ylim = c(0, 1), axes = FALSE, ann = FALSE)
+  graphics::plot(NULL, type= 'n', xlim = c(0, 1), ylim = c(0, 1), axes = FALSE, ann = FALSE)
 }
 # 
 # system_NNL = collated_realisations$landscape_NNL
@@ -820,7 +820,7 @@ plot_parcel_set_parcels <- function(current_set_object){
   
   for (parcel_ind in seq_len(parcel_num)){
     for (feature_ind in seq_len(run_params$feature_num)){
-      plot(rest_gains[, feature_ind, parcel_ind], type = 'l', ylim = c(mn, mx), main = paste0('parcel index =', current_set_object$parcel_indexes[parcel_ind]), ylab = '', xlab = paste0('dim = ', feature_ind))
+      graphics::plot(rest_gains[, feature_ind, parcel_ind], type = 'l', ylim = c(mn, mx), main = paste0('parcel index =', current_set_object$parcel_indexes[parcel_ind]), ylab = '', xlab = paste0('dim = ', feature_ind))
       lines(degs[, feature_ind, parcel_ind], col = 'blue')
       lines(rest_gains[, feature_ind, parcel_ind] + degs[, feature_ind, parcel_ind], col = 'red')
     }
@@ -911,7 +911,7 @@ find_plot_lims <- function(plot_list){
 overlay_plot_list <- function(plot_type, plot_list, yticks, ylims, heading, ylab, x_lab, col_vec, lty_vec, lwd_vec, legend_vec, legend_loc){
   
   if (plot_type == 'non-overlay'){
-    plot(plot_list[[1]], type = 'l', main = heading, ylim = ylims, ylab = ylab, xlab = x_lab, col = col_vec[1], lty = lty_vec[1], lwd = lwd_vec[1])
+    graphics::plot(plot_list[[1]], type = 'l', main = heading, ylim = ylims, ylab = ylab, xlab = x_lab, col = col_vec[1], lty = lty_vec[1], lwd = lwd_vec[1])
   } else {
     lines(plot_list[[1]], type = 'l', main = heading, ylim = ylims, ylab = ylab, xlab = x_lab, col = col_vec[1], lty = lty_vec[1], lwd = lwd_vec[1])
   }

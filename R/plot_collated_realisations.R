@@ -1,13 +1,29 @@
-plot <- function(plot_params_file){
+#' Plots the results of the Offset Simulator run
+#' @param config user configured plotting parameters to use
+#' @param loglevel logging level to use, for instance futile.logger::INFO
+#' @import futile.logger
+#' @export
+plot <- function(config, loglevel = INFO){
 
+  if (is.null(config)) {
+    stop('Please provide a plotting configuration file')
+  }
+  
+  flog.threshold(loglevel)
+  flog.info('Using Offset Simulator plot config %s', config )
+  
 #---------------------
 # User parameters
 #---------------------
-source(plot_params_file)
+  flog.info('Sourcing %s', config)
+source(config)
 plot_params <- initialise_plot_params()
 
 # Set the output filename, and open the pdf file for reading
-if (plot_params$write_pdf == TRUE){pdf(plot_params$filename, width = 8.3, height = 11.7)} 
+if (plot_params$write_pdf == TRUE){
+  flog.info('Writing PDF %s', plot_params$filename)
+  pdf(plot_params$filename, width = 8.3, height = 11.7)
+} 
 
 # write plots to nx * ny subplots
 setup_sub_plots(plot_params$nx, plot_params$ny, x_space = 5, y_space = 5)
@@ -87,6 +103,6 @@ for (plot_ind in plot_params$plot_vec){
 
 
 # Close the pdf file for reading
-if (plot_params$write_pdf == TRUE) dev.off()
-
+if (plot_params$write_pdf == TRUE) graphics.off()
+flog.info('Done')
 }
