@@ -1,9 +1,5 @@
 plot <- function(plot_params_file){
 
-rm(list = ls())
-source('R/plot_routines.R')                                   # functions to plot collated outputs
-source('R/collate_routines.R')
-
 #---------------------
 # User parameters
 #---------------------

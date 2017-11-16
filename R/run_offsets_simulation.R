@@ -1,15 +1,14 @@
 #' Runs the Offset Simulator
 #' @param config user configured parameters to use
+#' @param loglevel loggin level to use, for instance futile.logger::INFO
 #' @import doParallel
 #' @import foreach
 #' @import futile.logger
 #' @export
-run <- function(config = 'R/initialise_params_defaults.R', loglevel = INFO){
+run <- function(config = NULL, loglevel = INFO){
 
 flog.threshold(loglevel)
 flog.info('Starting Offset Simulator with config: %s', config )
-
-source('R/initialise_routines.R')                              # functions to collate simulation outputs
 
 run_params <- run_initialise_routines(config)
 initial_ecology <- readRDS(paste0(run_params$simulation_inputs_folder, 'parcel_ecology.rds'))

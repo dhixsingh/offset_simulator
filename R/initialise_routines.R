@@ -1,19 +1,14 @@
 #generic set of initialisation routines that are called for every simulation
 
-run_initialise_routines <- function(user_params_file){
+run_initialise_routines <- function(user_params_file = NULL){
   #' @import foreach
   #' @import doParallel
   #' @import abind
   #' @import pixmap
 
-  source('R/initialise_params_defaults.R')
-  source('R/simulation_routines.R')                 # functions to run simulation
-  source('R/collate_routines.R')                                # functions to collate simulation outputs
-  source('R/plot_routines.R')                                   # functions to plot collated outputs
-
   run_params <- initialise_run_params()
   policy_params <- initialise_policy_params() # list all program combinations to test
-  if (run_params$overwrite_default_params == TRUE){
+  if (!is.null(user_params_file) && run_params$overwrite_default_params == TRUE){
     run_params <- overwrite_current_params(params_type = 'run', run_params, user_params_file)
     policy_params <- overwrite_current_params(params_type = 'policy', policy_params, user_params_file)
   }
@@ -46,7 +41,6 @@ run_initialise_routines <- function(user_params_file){
                                                 full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
                                                 include.dirs = FALSE, no.. = FALSE)
     if ( (length(current_filenames) == 0) | (run_params$run_from_saved == FALSE) ){
-      source('R/construct_simulated_ecology.R')
       prepare_simulated_data(run_params)
     }
   }
@@ -522,9 +516,9 @@ initialise_index_object <- function(parcels, initial_ecology, run_params){
   index_object = list()
   index_object$banked_offset_pool = vector('list', parcels$region_num)
   index_object$indexes_to_use = list()
-  index_object$offset_indexes_to_use$offsets = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology,
+  index_object$indexes_to_use$offsets = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology,
                                                              run_params$screen_offset_sites_by_size, run_params$screen_offset_site_zeros, run_params)
-  index_object$dev_indexes_to_use$devs = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology,
+  index_object$indexes_to_use$devs = set_available_indexes(indexes_to_use = parcels$regions, parcels, initial_ecology,
                                                           run_params$screen_dev_sites_by_size, run_params$screen_dev_site_zeros, run_params)
 
   return(index_object)
