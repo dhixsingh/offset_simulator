@@ -22,11 +22,11 @@ initialise_plot_params <- function(){
   plot_params$nx = 3 
   plot_params$ny = 4
   
-  plot_params$base_folder = '/home/dsingh/offset_data/simulated/simulation_runs/00107'
+  plot_params$base_folder = paste0('../output/test01out/simulation_runs/00001')
   
-  plot_params$collated_folder = paste0(plot_params$base_folder, '/collated_outputs/')  # LOCATION OF COLLATED FILES
+  plot_params$collated_folder = paste0(plot_params$base_folder, '/collated_outputs')  # LOCATION OF COLLATED FILES
   
-  plot_params$simulation_params_folder = paste0(plot_params$base_folder, '/simulation_params/')
+  plot_params$simulation_params_folder = paste0(plot_params$base_folder, '/simulation_params')
   plot_params$output_plot_folder = plot_params$collated_folder
   
   if (plot_params$plot_type == 'impacts'){
