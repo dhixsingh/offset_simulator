@@ -3,7 +3,7 @@
 #' @param loglevel logging level to use, for instance futile.logger::INFO
 #' @import futile.logger
 #' @export
-plot <- function(config, loglevel = INFO){
+osim.plot <- function(config, loglevel = INFO){
 
   if (is.null(config)) {
     stop('Please provide a plotting configuration file')

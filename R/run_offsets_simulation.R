@@ -5,7 +5,7 @@
 #' @import foreach
 #' @import futile.logger
 #' @export
-run <- function(config = NULL, loglevel = WARN){
+osim.run <- function(config = NULL, loglevel = WARN){
 
 flog.threshold(loglevel)
 flog.info('Starting Offset Simulator with config: %s', config )
