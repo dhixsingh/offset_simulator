@@ -6,22 +6,22 @@
 osim.plot <- function(config, loglevel = INFO){
 
   if (is.null(config)) {
-    stop('Please provide a plotting configuration file')
+    stop('please provide an offsetsim plotting configuration file')
   }
   
   flog.threshold(loglevel)
-  flog.info('Using Offset Simulator plot config %s', config )
+  flog.info('using offsetsim plot config %s', config )
   
 #---------------------
 # User parameters
 #---------------------
-  flog.info('Sourcing %s', config)
+  flog.info('sourcing %s', config)
 source(config)
 plot_params <- initialise_plot_params()
 
 # Set the output filename, and open the pdf file for reading
 if (plot_params$write_pdf == TRUE){
-  flog.info('Writing PDF %s', plot_params$filename)
+  flog.info('will start writing to PDF %s', plot_params$filename)
   pdf(plot_params$filename, width = 8.3, height = 11.7)
 } 
 
@@ -35,8 +35,10 @@ if (plot_params$output_type == 'scenarios'){
 }
 
 if (file.exists(plot_params$run_params_filename) == FALSE){
-  stop (paste('no simulation run parameter file in pwd'))
+  stop (paste('offsetsim run parameter file not found in ', plot_params$run_params_filename))
 }
+
+flog.info('reading %s', plot_params$run_params_filename)
 run_params = readRDS(plot_params$run_params_filename)
 scenario_filenames <- list.files(path = plot_params$simulation_params_folder, pattern = '_policy_params', all.files = FALSE, 
                                  full.names = FALSE, recursive = FALSE, ignore.case = FALSE, 
@@ -46,17 +48,22 @@ check_plot_options(plot_params, run_params, scenario_filenames)
 
 
 if (!file.exists(plot_params$output_plot_folder)){
+  flog.info('creating output plot folder %s', plot_params$output_plot_folder)
   dir.create(plot_params$output_plot_folder)
 }
 
 
 for (plot_ind in plot_params$plot_vec){
+  flog.info('creating plot %d', plot_ind)
   if (plot_params$output_type == 'features'){
     feature_ind = plot_ind
   } else {
     scenario_ind = plot_ind
   }
-  current_policy_params = readRDS(paste0(plot_params$simulation_params_folder, '/', scenario_filenames[scenario_ind]))
+  toRead = paste0(plot_params$simulation_params_folder, '/', scenario_filenames[scenario_ind])
+  flog.info(' reading %s', toRead)
+  current_policy_params = readRDS(toRead)
+  
   collated_filenames = find_collated_files(file_path = plot_params$collated_folder, 
                                            scenario_string = formatC(scenario_ind, width = plot_params$string_width, format = "d", flag = "0"), 
                                            feature_string = formatC(run_params$features_to_use_in_simulation[feature_ind], 
@@ -64,7 +71,8 @@ for (plot_ind in plot_params$plot_vec){
                                            plot_params$realisation_num)
   
   collated_realisations = bind_collated_realisations(collated_filenames)
-  
+
+  flog.info(' writing plot %d of type %s', plot_ind, plot_params$plot_type)
   if (plot_params$plot_type == 'impacts'){
     plot_impact_set(collated_realisations, 
                     plot_params$plot_site_offset_impact, 
@@ -97,12 +105,15 @@ for (plot_ind in plot_params$plot_vec){
                      feature_ind) 
   }
   
-  print(paste0('policy ', scenario_ind, ' done'))
+  flog.info(' finished writing plot %d', plot_ind)
   
 }
 
 
 # Close the pdf file for reading
-if (plot_params$write_pdf == TRUE) graphics.off()
-flog.info('Done')
+if (plot_params$write_pdf == TRUE) {
+  graphics.off()
+  flog.info('closing PDF %s', plot_params$filename)
+}
+flog.info('all done')
 }
