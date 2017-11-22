@@ -1,6 +1,6 @@
 #' Runs the Offset Simulator
 #' @param config user configured parameters to use
-#' @param loglevel logging level to use, for instance futile.logger::INFO
+#' @param loglevel logging level to use, for instance futile.logger::WARN
 #' @import doParallel
 #' @import foreach
 #' @import futile.logger
@@ -8,7 +8,7 @@
 osim.run <- function(config = NULL, loglevel = WARN){
 
 flog.threshold(loglevel)
-flog.info('Starting Offset Simulator with config: %s', config )
+flog.info('starting offsetsim with config: %s', config )
 
 run_params <- run_initialise_routines(config)
 initial_ecology <- readRDS(paste0(run_params$simulation_inputs_folder, 'parcel_ecology.rds'))
