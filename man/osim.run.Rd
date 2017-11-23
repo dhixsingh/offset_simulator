@@ -9,7 +9,7 @@ osim.run(config = NULL, loglevel = WARN)
 \arguments{
 \item{config}{user configured parameters to use}
 
-\item{loglevel}{logging level to use, for instance futile.logger::INFO}
+\item{loglevel}{logging level to use, for instance futile.logger::WARN}
 }
 \description{
 Runs the Offset Simulator

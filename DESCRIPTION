@@ -13,6 +13,7 @@ Suggests:
 Imports:
     foreach,
     doParallel,
+    doRNG,
     abind,
     pixmap,
     futile.logger

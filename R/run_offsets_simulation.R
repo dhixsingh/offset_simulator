@@ -2,6 +2,7 @@
 #' @param config user configured parameters to use
 #' @param loglevel logging level to use, for instance futile.logger::WARN
 #' @import doParallel
+#' @import doRNG
 #' @import foreach
 #' @import futile.logger
 #' @export
@@ -23,7 +24,7 @@ decline_rates_initial <- simulate_decline_rates(parcel_num = length(parcels$land
 
 initial_ecology <- select_feature_subset(initial_ecology, run_params$features_to_use_in_simulation)
 
-cl<-parallel::makeCluster(run_params$crs)  # allow parallel processing on n = 4 processors
+cl<-parallel::makeCluster(run_params$crs, output="")  # allow parallel processing on n = 4 processors
 registerDoParallel(cl)
 
 for (scenario_ind in seq_along(run_params$policy_params_group)){
@@ -35,9 +36,25 @@ for (scenario_ind in seq_along(run_params$policy_params_group)){
             run_params$realisation_num,
             run_params$crs)
 
-  if (run_params$realisation_num > 1){
-    foreach(realisation_ind = seq_len(run_params$realisation_num),
-            .verbose=TRUE) %dopar%{
+  if (run_params$realisation_num > 1 && run_params$set_seed == TRUE){
+    # case when running DETERMINISTIC realisations in parallel
+    # doRNG needed to get deterministic foreach loops, dsingh 24/nov/17
+    flog.info('will use doRNG with seed %d to get determinisitc parallel runs', 123)
+    registerDoRNG(123) 
+    foreach(realisation_ind = seq_len(run_params$realisation_num)) %dorng%{
+              
+              simulation_outputs <- run_offset_simulation_routines(policy_params = run_params$policy_params_group[[scenario_ind]],
+                                                                   run_params,
+                                                                   parcels,
+                                                                   initial_ecology,
+                                                                   decline_rates_initial,
+                                                                   dev_weights,
+                                                                   scenario_ind,
+                                                                   realisation_ind)
+            }
+  } else if (run_params$realisation_num > 1){
+    # case when running NON-DETERMINISTIC realisations in parallel
+    foreach(realisation_ind = seq_len(run_params$realisation_num)) %dopar%{
 
       simulation_outputs <- run_offset_simulation_routines(policy_params = run_params$policy_params_group[[scenario_ind]],
                                                            run_params,
@@ -49,6 +66,8 @@ for (scenario_ind in seq_along(run_params$policy_params_group)){
                                                            realisation_ind)
     }
   } else {
+    # case when running single realisation
+    # bypasses foreach, but could be merged into earlier case of non-determinisitc realisations in parallel, dsingh 24/nov/17
     simulation_outputs <- run_offset_simulation_routines(policy_params = run_params$policy_params_group[[scenario_ind]],
                                                          run_params,
                                                          parcels,

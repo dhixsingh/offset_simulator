@@ -3,6 +3,7 @@ run_offset_simulation_routines <- function(policy_params, run_params, parcels, i
   current_data_dir = write_nested_folder(paste0(run_params$output_folder, 
                                                 'scenario_', formatC(scenario_ind, width = 3, format = "d", flag = "0"), 
                                                 '/realisation_', formatC(realisation_ind, width = 3, format = "d", flag = "0"), '/'))
+  flog.info('current data dir is %s', current_data_dir)
   
   # set object used to store simulation outputs 
   simulation_outputs = initialise_output_object(parcels, 
