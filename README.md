@@ -1,11 +1,11 @@
-Offset simulator
+offsetsim
 ================
 
 Software for simulating the impacts of biodiversity offsetting
 
  [![Travis build status](https://travis-ci.org/dhixsingh/offset_simulator.svg?branch=dev)](https://travis-ci.org/dhixsingh/offset_simulator)
 
-Instructions to run the software
+How to install and run
 ---------------------------------
 
 Download and install the latest version of R. If you are running from a linux-type system this can be done using:
@@ -16,19 +16,21 @@ sudo apt-get install r-base
 sudo apt-get install git
 ```
 
-To install the `offsetsim` package, from inside R do:
-
+You will then require the R `devtools` package in order to install offsetsim. To install `devtools`, from inside R do:
 ```
-> library(devtools)
-> install_github("dhixsingh/offset_simulator", ref="dev")
+> install.packages('devtools')
 ```
+To now install the `offsetsim` package, from inside R do:
+```
+> devtools::install_github("dhixsingh/offset_simulator", ref="dev")
+```
+This may take a while as R downloads, builds, and installs the package and all its dependencies.
 
-Then to run the simulator and plot the results, from inside R do:
-
+Once installed, to run the simulator and plot the results, from inside R do:
 ```
 > library(offsetsim)
-> offsetsim::run('/path/to/your/init-params.R')
-> offsetsim::plot('/path/to/your/plot-params.R')
+> osim.run('/path/to/your/init-params.R')
+> osim.plot('/path/to/your/plot-params.R')
 ```
 
 
