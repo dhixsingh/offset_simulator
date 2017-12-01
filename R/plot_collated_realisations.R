@@ -7,6 +7,8 @@ osim.plot <- function(plot_params, loglevel = INFO){
 
   if (is.null(plot_params)) {
     stop('please provide offsetsim plotting configuration')
+  } else if (!plot_is_config_valid(plot_params)) {
+    stop('please provide a valid offsetsim plotting configuration')
   }
   
   flog.threshold(loglevel)
