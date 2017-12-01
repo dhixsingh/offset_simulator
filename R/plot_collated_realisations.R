@@ -1,23 +1,15 @@
 #' Plots the results of the Offset Simulator run
-#' @param config user configured plotting parameters to use
+#' @param plot_params user configured plotting parameters to use
 #' @param loglevel logging level to use, for instance futile.logger::INFO
 #' @import futile.logger
 #' @export
-osim.plot <- function(config, loglevel = INFO){
+osim.plot <- function(plot_params, loglevel = INFO){
 
-  if (is.null(config)) {
-    stop('please provide an offsetsim plotting configuration file')
+  if (is.null(plot_params)) {
+    stop('please provide offsetsim plotting configuration')
   }
   
   flog.threshold(loglevel)
-  flog.info('using offsetsim plot config %s', config )
-  
-#---------------------
-# User parameters
-#---------------------
-  flog.info('sourcing %s', config)
-source(config)
-plot_params <- initialise_plot_params()
 
 # Set the output filename, and open the pdf file for reading
 if (plot_params$write_pdf == TRUE){
