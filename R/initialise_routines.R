@@ -7,10 +7,6 @@ run_initialise_routines <- function(user_params_file = NULL){
   #' @import pixmap
 
   run_params <- initialise_run_params()
-  if (run_params$realisation_num > 1){
-    cl<-parallel::makeCluster(run_params$crs)  # allow parallel processing on n = 4 processors
-    registerDoParallel(cl)
-  }
 
   policy_params <- initialise_policy_params() # list all program combinations to test
   if (!is.null(user_params_file) && run_params$overwrite_default_params == TRUE){
