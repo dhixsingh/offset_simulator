@@ -29,7 +29,7 @@ if (plot_params$output_type == 'scenarios'){
   scenario_ind = 1
   set_to_plot = plot_params$sets_to_plot
 } else if (plot_params$output_type == 'site_sets'){
-  scenario_ind = 5
+  scenario_ind = 1
   feature_ind = 1
   plot_params$plot_program = FALSE
   plot_params$plot_landscape = FALSE
