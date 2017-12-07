@@ -26,10 +26,10 @@ test_that("plotting test01", {
   plot_params$plot_type = 'impacts' # can be 'outcomes'  or 'impacts',
   plot_params$output_type = 'site_sets' # set to plot through 'features', 'scenarios' or 'site_sets'
   plot_params$realisation_num = 'all' # 'all' or number to plot
-  plot_params$write_pdf = FALSE
-  plot_params$run_number = 167 # location of simulation output folder
+  plot_params$write_pdf = TRUE
+  plot_params$run_number = 1 # location of simulation output folder
   plot_params$sets_to_plot = 8 # example site to plot
-  plot_params$plot_vec = c(1) #c(1,4,7,10, 8, 2,3,5,6,9,11,12 ) #1:12
+  plot_params$plot_vec = c(1:6) #c(1,4,7,10, 8, 2,3,5,6,9,11,12 ) #1:12
   plot_params$site_impact_col_vec = c('darkgreen', 'red', 'black')
   plot_params$program_col_vec = c('darkgreen', 'red', 'black') 
   plot_params$cfac_col = 'blue' 
@@ -144,6 +144,5 @@ test_that("plotting test01", {
   # check only that we got the PDF we wanted
   actual <- '../output/test01out/simulation_runs/00001/collated_outputs/impacts.pdf'
   flog.info(paste('checking if', actual , 'exists'))
-  #expect_true(file.exists(actual))
-  expect_true(1==1)
+  expect_true(file.exists(actual))
 })
