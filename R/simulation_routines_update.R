@@ -665,7 +665,7 @@ assess_current_pool <- function(pool_object, pool_type, calc_type, cfacs_flag, a
         current_decline_rates = decline_rates_initial[current_pool]
       }
       
-      projected_vals = project_parcel(current_parcel_ecologies = pool_object$parcel_ecologies, 
+      projected_vals = project_site(current_parcel_ecologies = pool_object$parcel_ecologies, 
                                       current_decline_rates, 
                                       time_horizons, 
                                       run_params,
@@ -700,7 +700,7 @@ calc_cfacs <- function(parcel_ecologies, parcel_num_remaining, run_params, curre
     flog.error('calc cfacs length error')
   }
   
-  cfacs_object$cfacs = project_parcel(parcel_ecologies, 
+  cfacs_object$cfacs = project_site(parcel_ecologies, 
                                       decline_rates, 
                                       time_horizons, 
                                       run_params,
