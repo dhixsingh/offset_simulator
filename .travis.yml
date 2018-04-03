@@ -9,5 +9,9 @@ r_binary_packages:
   - devtools
   - roxygen2
 
+script:
+  - travis_wait 60 R CMD build .
+  - travis_wait 60 R CMD check *tar.gz
+
 #after_success:
 #  - Rscript -e "devtools::install();devtools::test()"
